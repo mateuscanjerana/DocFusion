@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="DocFusion: organize, una e personalize seus PDFs sem enviar arquivos para um servidor." />
+  <title>DocFusion — Seu estúdio de PDFs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.6/Sortable.min.js"></script>
+  <script defer src="icons.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Painel de arquivos">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><i data-lucide="layers-3"></i></div>
+        <div class="brand-copy"><strong>DocFusion<span class="brand-dot">.</span></strong><span>PDF WORKSPACE</span></div>
+        <span class="release-pill">V1</span>
+      </div>
+      <div class="sidebar-scroll">
+        <div class="section-overline">SEU ESPAÇO</div>
+        <div class="sidebar-current"><i data-lucide="folder-open"></i><span>Meu documento</span><span class="active-mark"></span></div>
+        <div class="sidebar-section-head"><span>ARQUIVOS DE ORIGEM</span><span id="fileCountLabel">0</span></div>
+        <div id="sourceList" class="source-list">
+          <div class="source-placeholder">Seus PDFs aparecerão aqui depois do upload.</div>
+        </div>
+        <label class="upload-tile" for="fileInput" tabindex="0" id="uploadTile" role="button" aria-label="Adicionar arquivos PDF">
+          <span class="upload-illustration"><i data-lucide="file-up"></i></span>
+          <strong>Adicionar arquivos</strong>
+          <small>Arraste PDFs aqui ou clique para selecionar</small>
+          <span class="upload-pill"><i data-lucide="plus"></i> Selecionar PDFs</span>
+        </label>
+        <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple hidden />
+        <div class="sidebar-section-head tools-title"><span>CRIAR & PERSONALIZAR</span></div>
+        <button class="side-action" id="createCoverBtn" type="button"><span class="side-icon coral"><i data-lucide="panel-top"></i></span><span><strong>Criar capa</strong><small>Personalize seu documento</small></span><i data-lucide="chevron-right" class="push"></i></button>
+        <div class="side-action disabled-feature" aria-label="Conversão DOCX ainda não disponível"><span class="side-icon blue"><i data-lucide="file-pen-line"></i></span><span><strong>Converter em DOCX</strong><small>Disponível em uma futura versão</small></span><span class="coming">EM BREVE</span></div>
+      </div>
+      <div class="sidebar-bottom"><div class="privacy-line"><i data-lucide="shield-check"></i><div><strong>Processamento local</strong><span>Seus arquivos permanecem no navegador.</span></div></div></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Workspace</span><i data-lucide="chevron-right"></i><strong>Novo documento</strong></div>
+        <div class="topbar-right"><span class="local-pill"><span class="status-pulse"></span> 100% no navegador</span><button type="button" class="icon-btn help-btn" id="helpBtn" aria-label="Ajuda" title="Como usar"><i data-lucide="circle-help"></i></button></div>
+      </header>
+      <div class="main-content">
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-dash"></span> DOCUMENT WORKSPACE</div><h1>Seu estúdio de <span>PDFs.</span></h1><p>Transforme vários arquivos em um só documento. Organize, crie capas e exporte com liberdade.</p></div><span class="workspace-chip"><i data-lucide="sparkles"></i> Estúdio de documentos</span></div>
+        <section class="metrics" aria-label="Estatísticas do projeto">
+          <div class="metric"><span class="metric-icon"><i data-lucide="files"></i></span><div><strong id="statFiles">00</strong><small>Arquivos PDF</small></div></div>
+          <div class="metric"><span class="metric-icon orange"><i data-lucide="book-open"></i></span><div><strong id="statPages">00</strong><small>Páginas no documento</small></div></div>
+          <div class="metric"><span class="metric-icon green"><i data-lucide="layout-template"></i></span><div><strong id="statCovers">00</strong><small>Capas criadas</small></div></div>
+        </section>
+        <section id="emptyState" class="empty-state">
+          <div class="empty-copy"><span class="section-kicker"><i data-lucide="wand-sparkles"></i> COMECE POR AQUI</span><h2>De arquivos separados<br />a um <em>documento incrível.</em></h2><p>Adicione seus PDFs para visualizar, reorganizar páginas e criar uma versão final do seu jeito.</p><label for="fileInput" class="primary-button label-button"><i data-lucide="upload-cloud"></i> Escolher arquivos PDF <i data-lucide="arrow-up-right"></i></label><span class="tip-line"><i data-lucide="lock-keyhole"></i> Seus documentos não são enviados à nuvem</span></div>
+          <div class="empty-art" aria-hidden="true"><div class="ambient-glow"></div><div class="mock-paper paper-back"><div class="mock-lines"><span></span><span></span><span></span></div></div><div class="mock-paper paper-mid"><div class="mock-label">PDF</div><div class="mock-lines"><span></span><span></span><span></span><span></span></div></div><div class="mock-paper paper-front"><div class="mock-logo"><i data-lucide="layers-3"></i></div><span class="mock-eyebrow">DOCFUSION / STUDIO</span><strong>Crie algo<br />extraordinário.</strong><i data-lucide="arrow-up-right" class="mock-arrow"></i></div></div>
+        </section>
+        <section id="workspace" class="workspace hidden" aria-label="Editor de PDF">
+          <div class="panel board-panel"><div class="panel-header"><div><span class="section-kicker">01 / ORGANIZAR</span><h2>Páginas do documento <span class="page-count-badge" id="boardCount">0</span></h2><p>Arraste as páginas para alterar a ordem.</p></div><div class="panel-actions"><button type="button" class="quiet-button" id="clearBtn" title="Limpar todo o documento"><i data-lucide="trash-2"></i><span>Limpar</span></button></div></div><div class="board-toolbar"><span><i data-lucide="grip-vertical"></i> Arraste para organizar</span><span id="boardSummary">0 páginas</span></div><div class="pages-content" id="pagesScroll"><div id="pageGrid" class="page-grid" aria-label="Páginas reordenáveis"></div></div></div>
+          <div class="panel preview-panel"><div class="panel-header"><div><span class="section-kicker">02 / VISUALIZAR</span><h2>Pré-visualização</h2><p id="selectedDetails">Selecione uma página para visualizar.</p></div><div class="view-tag"><i data-lucide="eye"></i> AO VIVO</div></div><div class="preview-toolbar"><div class="preview-tool-group"><button type="button" class="tool-btn" id="rotateLeftBtn" title="Girar 90° à esquerda" aria-label="Girar para esquerda"><i data-lucide="rotate-ccw"></i></button><button type="button" class="tool-btn" id="rotateRightBtn" title="Girar 90° à direita" aria-label="Girar para direita"><i data-lucide="rotate-cw"></i></button><span class="tool-divider"></span><button type="button" class="tool-btn" id="duplicateBtn" title="Duplicar página" aria-label="Duplicar página"><i data-lucide="copy-plus"></i></button><button type="button" class="tool-btn" id="editCoverBtn" title="Editar capa" aria-label="Editar capa" hidden><i data-lucide="pencil"></i></button><button type="button" class="tool-btn danger" id="deletePageBtn" title="Excluir página" aria-label="Excluir página"><i data-lucide="trash-2"></i></button></div><div class="preview-tool-group"><button type="button" class="tool-btn" id="zoomOutBtn" title="Diminuir zoom"><i data-lucide="minus"></i></button><span class="zoom-label" id="zoomLabel">100%</span><button type="button" class="tool-btn" id="zoomInBtn" title="Aumentar zoom"><i data-lucide="plus"></i></button></div></div><div id="previewScroll" class="preview-scroll"><div id="previewPageWrap" class="preview-page-wrap"><canvas id="previewCanvas" role="img" aria-label="Pré-visualização da página selecionada"></canvas></div></div><div class="preview-footer"><span id="previewFooterLabel">—</span><div class="preview-pagination"><button type="button" id="prevPageBtn" class="tool-btn" aria-label="Página anterior"><i data-lucide="chevron-left"></i></button><span id="paginationLabel">0 / 0</span><button type="button" id="nextPageBtn" class="tool-btn" aria-label="Próxima página"><i data-lucide="chevron-right"></i></button></div></div></div>
+        </section>
+        <section class="bottom-info"><div><i data-lucide="lightbulb"></i><span><strong>Dica rápida:</strong> comece enviando seus PDFs. Você pode reorganizar e remover páginas antes de exportar.</span></div><span>DocFusion Studio • Versão 1.0</span></section>
+      </div>
+      <footer class="export-bar"><div class="export-copy"><span class="export-status"><i data-lucide="check"></i></span><div><strong id="exportStatus">Nenhum documento carregado</strong><small id="exportSubstatus">Adicione PDFs ou crie uma capa para começar</small></div></div><div class="export-actions"><div class="output-format"><i data-lucide="file-type"></i> PDF <i data-lucide="chevron-down"></i></div><button type="button" id="exportBtn" class="primary-button export-button" disabled><i data-lucide="download"></i><span id="exportBtnText">Exportar PDF</span><i data-lucide="arrow-up-right"></i></button></div></footer>
+    </main>
+  </div>
+  <div id="dropOverlay" class="drop-overlay hidden" aria-hidden="true"><div><i data-lucide="file-up"></i><strong>Solte seus PDFs aqui</strong><span>Vamos adicionar as páginas ao documento</span></div></div>
+  <div id="toastArea" class="toast-area" role="status" aria-live="polite"></div>
+  <div id="coverModal" class="modal-layer hidden" aria-hidden="true"><div class="modal-backdrop" data-close-modal="true"></div><div class="cover-modal" role="dialog" aria-modal="true" aria-labelledby="coverHeading"><div class="cover-modal-head"><div><span class="section-kicker">CRIADOR DE CAPAS</span><h2 id="coverHeading">Personalize sua capa</h2><p>Escolha um modelo e preencha os detalhes.</p></div><button type="button" class="icon-btn" id="closeCoverBtn" aria-label="Fechar janela"><i data-lucide="x"></i></button></div><div class="cover-modal-main"><form id="coverForm" class="cover-form"><label class="field-label">Estilo da capa</label><div class="template-options" role="radiogroup" aria-label="Estilo da capa"><label class="template-option"><input type="radio" name="template" value="aurora" checked /><span class="template-chip aurora-chip"></span><span>Gradiente</span></label><label class="template-option"><input type="radio" name="template" value="minimal" /><span class="template-chip minimal-chip"></span><span>Minimalista</span></label><label class="template-option"><input type="radio" name="template" value="editorial" /><span class="template-chip editorial-chip"></span><span>Editorial</span></label></div><label class="field-label" for="coverTitle">Título principal</label><input id="coverTitle" name="title" maxlength="100" required value="Meu novo projeto" placeholder="Ex.: Relatório de atividades" /><label class="field-label" for="coverSubtitle">Subtítulo</label><input id="coverSubtitle" name="subtitle" maxlength="160" value="Uma nova forma de apresentar ideias" placeholder="Subtítulo (opcional)" /><label class="field-label" for="coverAuthor">Autor ou organização</label><input id="coverAuthor" name="author" maxlength="90" value="Preparado por você" placeholder="Nome ou organização" /><label class="field-label" for="coverDate">Data ou identificação</label><input id="coverDate" name="date" maxlength="55" placeholder="Ex.: Outubro de 2026" /><label class="field-label" for="coverPosition">Onde adicionar?</label><select id="coverPosition" name="position"><option value="start">No início do documento</option><option value="after">Após a página selecionada</option><option value="end">No final do documento</option></select><div class="modal-actions"><button type="button" class="secondary-button" id="cancelCoverBtn">Cancelar</button><button type="submit" class="primary-button" id="saveCoverBtn"><i data-lucide="plus"></i><span>Adicionar capa</span></button></div></form><div class="cover-live-preview"><div class="live-label"><i data-lucide="eye"></i> PRÉVIA DA CAPA</div><canvas id="coverPreviewCanvas" aria-label="Prévia da capa em edição"></canvas><small>Formato A4 • Pronta para impressão</small></div></div></div></div>
+  <div id="helpModal" class="modal-layer hidden" aria-hidden="true"><div class="modal-backdrop" data-close-modal="true"></div><div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="helpHeading"><div class="cover-modal-head"><div><span class="section-kicker">COMECE EM MINUTOS</span><h2 id="helpHeading">Como usar o DocFusion</h2></div><button type="button" class="icon-btn" id="closeHelpBtn" aria-label="Fechar ajuda"><i data-lucide="x"></i></button></div><ol class="help-steps"><li><strong>Adicione seus PDFs</strong><span>Selecione ou arraste arquivos para o aplicativo. Máximo recomendado: 30 MB por arquivo.</span></li><li><strong>Organize suas páginas</strong><span>Arraste os cartões, clique para pré-visualizar, gire, duplique ou exclua páginas.</span></li><li><strong>Insira capas</strong><span>Escolha um modelo, preencha os campos e insira a capa na posição desejada.</span></li><li><strong>Exporte</strong><span>Clique em “Exportar PDF” para criar o arquivo final, sem upload para servidor.</span></li></ol><p class="help-note">Limitações da V1: conversão para DOCX, edição de texto original e leitura OCR não estão implementadas. PDFs protegidos por senha podem não ser aceitos.</p></div></div>
+</body>
+</html>
